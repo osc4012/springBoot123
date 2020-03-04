@@ -20,6 +20,12 @@ public class PostsService {
     private final PostsRepository postsRepository;
 
     @Transactional
+    public void delete(Long id) {
+        Posts posts = postsRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("해당 게시글 없다. id=" + id));
+        postsRepository.delete(posts);
+    }
+
+    @Transactional
     public Long save(PostsSaveRequestDto requestDto) {
         return postsRepository.save(requestDto.toEntity()).getId();
 
